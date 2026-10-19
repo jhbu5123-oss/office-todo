@@ -14,7 +14,7 @@ const Cloud = (() => {
   const emailIds={login:'login-email',signup:'signup-email',recover:'recover-email',resend:'resend-email'};
   const email=byId(emailIds[mode])?.value.trim()||'';
   mode=next;clearMessages();
-  const content={login:['로그인','내 계정의 할 일을 이어서 관리하세요.'],signup:['회원가입','이메일로 가입하고 나만의 할 일을 관리하세요.'],recover:['비밀번호 찾기','가입한 이메일로 비밀번호 재설정 링크를 보내드립니다.'],resend:['인증 메일 다시 받기','가입할 때 사용한 이메일을 입력하세요.'],reset:['새 비밀번호 설정','아래에 새로운 비밀번호를 입력하세요.']};
+  const content={login:['로그인','내 계정의 할 일을 이어서 관리하세요.'],signup:['동료 회원가입','관리자가 사용을 허용한 이메일로 가입하세요.'],recover:['비밀번호 찾기','가입한 이메일로 비밀번호 재설정 링크를 보내드립니다.'],resend:['인증 메일 다시 받기','가입할 때 사용한 이메일을 입력하세요.'],reset:['새 비밀번호 설정','아래에 새로운 비밀번호를 입력하세요.']};
   byId('auth-title').textContent=content[next][0];byId('auth-description').textContent=content[next][1];
   for(const name of ['login','signup','recover','resend','reset'])byId(name+'-form').hidden=name!==next;
   byId('auth-tabs').hidden=!['login','signup'].includes(next);
@@ -25,6 +25,7 @@ const Cloud = (() => {
  }
  function authError(error){
   const code=String(error.code||''),text=String(error.message||'');
+  if(text.includes('TODO_SIGNUP_NOT_ALLOWED'))return '관리자가 사용을 허용한 이메일로만 가입할 수 있습니다. 이메일 등록을 관리자에게 요청하세요.';
   if(code==='signup_disabled'||/signups? not allowed|signup.*disabled/i.test(text))return '현재 신규 가입을 받지 않고 있습니다. 관리자에게 문의해 주세요.';
   if(code==='email_not_confirmed'||/email not confirmed/i.test(text))return '이메일 인증을 완료한 후 로그인하세요. 메일이 없다면 인증 메일 다시 받기를 이용하세요.';
   if(code==='invalid_credentials'||/invalid login credentials/i.test(text))return '이메일 또는 비밀번호를 확인하세요.';
