@@ -38,6 +38,30 @@ function matches(t,view,today=day()){
  if(view==='completed')return t.done;
  return t.list===view;
 }
+// List array order is persisted in the existing server payload and JSON backups.
+function moveList(state,id,targetId,after=false){
+ const list=state.lists.find(l=>l.id===id),target=state.lists.find(l=>l.id===targetId);
+ if(!list||!target||id==='inbox'||targetId==='inbox'||id===targetId)return false;
+ const previous=state.lists.map(l=>l.id),group=list.group;
+ state.lists=state.lists.filter(l=>l.id!==id);
+ state.lists.splice(state.lists.indexOf(target)+(after?1:0),0,list);
+ list.group=target.group;
+ return previous.some((id,index)=>id!==state.lists[index].id)||group!==list.group;
+}
+function moveListToGroup(state,id,group){
+ const list=state.lists.find(l=>l.id===id);
+ if(!list||id==='inbox'||(group&&!state.groups.some(g=>g.id===group)))return false;
+ const peers=state.lists.filter(l=>l.id!==id&&l.id!=='inbox'&&l.group===group);
+ if(peers.length)return moveList(state,id,peers.at(-1).id,true);
+ if(list.group===group)return false;
+ list.group=group;return true;
+}
+function deleteList(state,id){
+ if(id==='inbox'||!state.lists.some(l=>l.id===id))return false;
+ state.tasks=state.tasks.filter(t=>t.list!==id);
+ state.lists=state.lists.filter(l=>l.id!==id);
+ return true;
+}
 function validate(s){
  const fail=()=>{throw Error('지원하지 않거나 손상된 백업 파일입니다.');};
  if(!s||s.version!==1||!Array.isArray(s.tasks)||!Array.isArray(s.lists)||!Array.isArray(s.groups)||!s.settings)fail();
@@ -58,6 +82,6 @@ function validate(s){
  });
  if(!['light','dark'].includes(s.settings.theme))fail();return s;
 }
-root.TodoCore={uid,day,validDate,advance,nextDue,empty,task,complete,matches,validate};
+root.TodoCore={uid,day,validDate,advance,nextDue,empty,task,complete,matches,moveList,moveListToGroup,deleteList,validate};
 if(typeof module!=='undefined')module.exports=root.TodoCore;
 })(globalThis);
