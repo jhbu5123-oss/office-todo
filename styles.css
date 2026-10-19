@@ -48,3 +48,26 @@ body.dark .nav-row.active{background:#343e5b}
 body.dark .nav-item.active .nav-icon{color:#a8b9f0}
 body.dark dialog p.delete-warning{color:#f19ba7}
 @media(max-width:620px){.list-menu{width:34px;height:38px}.dialog-actions{flex-wrap:wrap}.view-heading{display:inline}}
+
+/* v1.3: registration and email password recovery. */
+.auth-screen{align-items:start;padding:clamp(20px,6vh,64px) 20px}
+.auth-card{margin:auto;max-width:440px;padding:32px}
+.auth-brand{display:flex;align-items:center;gap:12px;font-weight:650;font-size:16px}
+.auth-brand small{font-size:11px;font-weight:400;color:#798399;margin-left:4px}
+.auth-card h1{font-size:26px;color:#344771;letter-spacing:-.8px}
+#auth-description{margin-bottom:22px;color:#707b91;font-size:13px}
+.auth-tabs{display:flex;border-radius:9px;padding:4px;background:#eef1f8;gap:4px;margin-bottom:20px}
+.auth-card .auth-tabs button{width:50%;padding:9px;margin:0;color:#6b7791;font-size:13px}
+.auth-tabs button[aria-pressed=true]{background:#fff;color:#415daa;box-shadow:0 2px 7px #2536580c;font-weight:600}
+.auth-card label{font-size:13px;color:#54617a}
+.auth-card input{font-size:14px;background:white;color:#23304b}
+.auth-card small{color:#748096;font-size:11px;line-height:1.7}
+.auth-card button.primary{margin-top:13px}
+.auth-links{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+.auth-card .auth-links button{width:auto;font-size:11px;color:#66799f;padding:8px 2px;margin:0}
+.auth-card p.auth-footnote{font-size:12px;color:#768298;line-height:1.7}
+.auth-card .auth-message{padding:12px 14px;background:#edf4ef;border:1px solid #d7e6da;border-radius:8px;color:#38694a;font-size:12px;overflow-wrap:anywhere}
+.auth-card #auth-error{padding:12px 14px;background:#fff0f2;border:1px solid #f4d7dd;border-radius:8px;color:#a33140;font-size:12px;line-height:1.7}
+.auth-card .auth-privacy{border-top:1px solid #e9ecf3;margin:20px 0 0;padding-top:17px;color:#8a93a5;font-size:11px;text-align:center}
+.identity>div:not(.avatar){min-width:0}.identity #account-email{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:170px}
+@media(max-width:420px){.auth-card{padding:25px}.auth-screen{padding:18px 14px}.auth-links{flex-wrap:wrap}}
