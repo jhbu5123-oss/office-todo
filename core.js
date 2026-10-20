@@ -6,6 +6,8 @@ const day=(now=new Date())=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seou
 const parse=s=>new Date(s+'T12:00:00Z');
 const iso=d=>d.toISOString().slice(0,10);
 const validDate=s=>typeof s==='string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(+parse(s)) && iso(parse(s))===s;
+const dueKey=t=>t.due||t.reminder.slice(0,10)||'9999';
+const isOverdue=(t,now=new Date())=>!!t.due&&!t.done&&t.due<day(now);
 function advance(date,repeat,anchor){
  const d=parse(date),n=repeat.interval||1;
  if(repeat.unit==='weekday'){do{d.setUTCDate(d.getUTCDate()+1);}while([0,6].includes(d.getUTCDay()));}
@@ -73,6 +75,7 @@ function validate(s){
  if(!s.lists.some(l=>l.id==='inbox'))fail();
  s.tasks.forEach(t=>{id(t.id);str(t.title,1000);str(t.note);str(t.reminder,30);str(t.created,50);str(t.series,200);if(!s.lists.some(l=>l.id===t.list)||typeof t.done!=='boolean'||typeof t.important!=='boolean')fail();
  for(const key of ['due','myDay'])if(t[key]!==''&&!validDate(t[key]))fail();
+ delete t.dueTime; // Retire v1.5 deadline times; keep the date.
  if(t.reminder&&(typeof t.reminder!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(t.reminder)||!validDate(t.reminder.slice(0,10))||+t.reminder.slice(11,13)>23||+t.reminder.slice(14)>59))fail();
  if(t.repeat&&(!['day','weekday','week','month','year'].includes(t.repeat.unit)||!Number.isInteger(t.repeat.interval)||t.repeat.interval<1||t.repeat.interval>365))fail();
  if(t.anchor!=null&&(!Number.isInteger(t.anchor)||t.anchor<1||t.anchor>31))fail();
@@ -82,6 +85,6 @@ function validate(s){
  });
  if(!['light','dark'].includes(s.settings.theme))fail();return s;
 }
-root.TodoCore={uid,day,validDate,advance,nextDue,empty,task,complete,matches,moveList,moveListToGroup,deleteList,validate};
+root.TodoCore={uid,day,validDate,dueKey,isOverdue,advance,nextDue,empty,task,complete,matches,moveList,moveListToGroup,deleteList,validate};
 if(typeof module!=='undefined')module.exports=root.TodoCore;
 })(globalThis);

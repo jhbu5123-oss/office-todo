@@ -71,3 +71,29 @@ body.dark dialog p.delete-warning{color:#f19ba7}
 .auth-card .auth-privacy{border-top:1px solid #e9ecf3;margin:20px 0 0;padding-top:17px;color:#8a93a5;font-size:11px;text-align:center}
 .identity>div:not(.avatar){min-width:0}.identity #account-email{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:170px}
 @media(max-width:420px){.auth-card{padding:25px}.auth-screen{padding:18px 14px}.auth-links{flex-wrap:wrap}}
+
+
+/* Compact date picker beside Add */
+#add-task{gap:10px}
+#new-title{flex:1;min-width:0;width:auto}
+.due-control{position:relative;flex-shrink:0}
+#add-task #toggle-new-due{display:flex;align-items:center;gap:5px;padding:8px;min-height:36px}
+#toggle-new-due.has-due{background:var(--hover)}
+#new-due-label{font-size:11px}
+#due-popover{position:absolute;bottom:calc(100% + 14px);right:0;width:240px;max-width:75vw;padding:16px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 30px #17233926;z-index:8}
+#due-popover label{display:block;font-size:12px;margin-bottom:10px;color:var(--muted)}
+#due-popover input{width:100%;border:1px solid var(--line);border-radius:5px;padding:9px}
+.due-actions{display:flex;justify-content:space-between;margin-top:12px}
+#add-task .due-actions button{padding:7px}
+body.dark input{color-scheme:dark}
+@media(max-width:480px){#new-due-label{display:none}}
+
+.due-presets{display:flex;flex-direction:column;gap:3px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+#add-task .due-presets button{text-align:left;padding:10px;font-size:13px;color:var(--ink)}
+.due-presets small{float:right;color:var(--muted);font-size:11px}
+#add-task #submit-task{display:flex;align-items:center;justify-content:center;gap:4px;padding:8px 12px;min-height:36px;background:var(--accent);color:#fff;border-radius:7px;font-size:12px}
+#add-task #submit-task:hover{filter:brightness(.94)}
+#submit-task .svg-icon{width:16px;height:16px}
+#add-group{display:flex;align-items:center;justify-content:center}
+.due-icon{display:inline-flex;vertical-align:middle;margin-right:3px}
+.due-icon .svg-icon{width:13px;height:13px}
