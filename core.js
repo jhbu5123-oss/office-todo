@@ -23,7 +23,7 @@ function nextDue(task,today=day()){
  do {const next=advance(date,task.repeat,task.anchor||parse(date).getUTCDate());if(next<=date)throw Error('Invalid recurrence');date=next;}while(date<=today);
  return date;
 }
-function empty(){return {version:1,revision:'',groups:[],lists:[{id:'inbox',name:'작업',group:'',color:'blue'}],tasks:[],settings:{theme:'light'}};}
+function empty(){return {version:1,revision:'',groups:[],lists:[{id:'inbox',name:'작업',group:'',color:'blue'}],tasks:[],settings:{theme:'light',color:'blue'}};}
 function task(title,list='inbox',today=day()){return {id:uid(),title,list,done:false,important:false,myDay:'',due:'',reminder:'',repeat:null,anchor:null,note:'',steps:[],created:new Date().toISOString(),order:Date.now(),deleted:null,completed:null,series:uid(),nextId:null};}
 function complete(state,t,today=day()){
  if(t.done){t.done=false;t.completed=null;return;}
@@ -83,7 +83,7 @@ function validate(s){
  for(const k of ['created','completed','deleted'])if(t[k]!=null&&(typeof t[k]!=='string'||Number.isNaN(Date.parse(t[k]))))fail();
  if(t.nextId!=null)str(t.nextId,200);
  });
- if(!['light','dark'].includes(s.settings.theme))fail();return s;
+ if(!['light','dark'].includes(s.settings.theme))fail();if(!['blue','teal','purple','rose','sand'].includes(s.settings.color))s.settings.color='blue';return s;
 }
 root.TodoCore={uid,day,validDate,dueKey,isOverdue,advance,nextDue,empty,task,complete,matches,moveList,moveListToGroup,deleteList,validate};
 if(typeof module!=='undefined')module.exports=root.TodoCore;
