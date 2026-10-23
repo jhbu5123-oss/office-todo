@@ -154,3 +154,6 @@ body[data-color=slate] .task.done .check:hover{background:var(--accent)}
 
 
 body.dark[data-color=chatgpt] .task.done .check{color:#fff!important}
+
+/* PC installation */
+#pc-install-help{width:min(480px,calc(100vw - 32px));max-height:85vh;overflow:auto;padding:28px;border:1px solid var(--line);border-radius:16px;background:var(--panel,#fff);color:var(--ink,#23304b)}#pc-install-help::backdrop{background:#15213b66}#pc-install-help p{font-size:14px;line-height:1.8}#pc-install-help button{padding:10px 24px}#pc-install-help form{text-align:right}[data-pc-install]{white-space:nowrap}
