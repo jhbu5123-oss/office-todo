@@ -71,7 +71,7 @@ function validate(s){
  const ids=new Set();const id=x=>{if(typeof x!=='string'||!x||x.length>200||ids.has(x))fail();ids.add(x);};
  const str=(x,max=20000)=>{if(typeof x!=='string'||x.length>max)fail();};
  s.groups.forEach(g=>{id(g.id);str(g.name,200);});
- s.lists.forEach(l=>{id(l.id);str(l.name,200);if(!['blue','teal','purple','rose','sand'].includes(l.color))fail();if(l.group&&!s.groups.some(g=>g.id===l.group))fail();});
+ s.lists.forEach(l=>{if(l.color==='deepteal')l.color='teal';if(l.color==='mutedpurple')l.color='purple';id(l.id);str(l.name,200);if(!['blue','teal','purple','rose','sand','slate','chatgpt'].includes(l.color))fail();if(l.group&&!s.groups.some(g=>g.id===l.group))fail();});
  if(!s.lists.some(l=>l.id==='inbox'))fail();
  s.tasks.forEach(t=>{id(t.id);str(t.title,1000);str(t.note);str(t.reminder,30);str(t.created,50);str(t.series,200);if(!s.lists.some(l=>l.id===t.list)||typeof t.done!=='boolean'||typeof t.important!=='boolean')fail();
  for(const key of ['due','myDay'])if(t[key]!==''&&!validDate(t[key]))fail();
@@ -83,7 +83,8 @@ function validate(s){
  for(const k of ['created','completed','deleted'])if(t[k]!=null&&(typeof t[k]!=='string'||Number.isNaN(Date.parse(t[k]))))fail();
  if(t.nextId!=null)str(t.nextId,200);
  });
- if(!['light','dark'].includes(s.settings.theme))fail();if(!['blue','teal','purple','rose','sand'].includes(s.settings.color))s.settings.color='blue';return s;
+ if(s.settings.color==='deepteal')s.settings.color='teal';if(s.settings.color==='mutedpurple')s.settings.color='purple';
+ if(!['light','dark'].includes(s.settings.theme))fail();if(!['blue','teal','purple','rose','sand','slate','chatgpt'].includes(s.settings.color))s.settings.color='blue';return s;
 }
 root.TodoCore={uid,day,validDate,dueKey,isOverdue,advance,nextDue,empty,task,complete,matches,moveList,moveListToGroup,deleteList,validate};
 if(typeof module!=='undefined')module.exports=root.TodoCore;

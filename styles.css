@@ -131,3 +131,26 @@ body.dark[data-color] .primary,body.dark[data-color] #submit-task,body.dark[data
 /* Remember email */
 .auth-card label.remember-email{display:flex;align-items:center;gap:8px;cursor:pointer;margin:16px 0 5px;width:fit-content}
 .auth-card .remember-email input{width:16px;height:16px;margin:0;padding:0;accent-color:var(--theme-accent,#526bc2);flex-shrink:0}
+
+/* v1.6.4: additional themes; original five palettes remain unchanged. */
+.swatch.slate{background:#526581}.swatch.chatgpt{background:#303030}
+body[data-color=slate]{--theme-accent:#526581;--theme-bg:#f3f5f8;--theme-selected:#eaf0f7;--hover:#eaf0f7}
+body.dark[data-color=slate]{--theme-accent:#b0bfd4;--theme-bg:#222831;--theme-selected:#354154;--hover:#354154}
+body[data-color=chatgpt]{--theme-accent:#303030;--theme-bg:#f1f2f3;--theme-selected:#ececec;--panel:#ffffff;--ink:#202123;--muted:#676767;--line:#e5e5e5;--hover:#ececec;background:#fff;color:var(--ink);--completed-text:#8a8a8a}
+body[data-color=chatgpt] .sidebar{background:#f7f7f8}
+body[data-color=chatgpt] .detail{background:var(--panel)}
+body[data-color=chatgpt] .toolbar{color:var(--muted)}
+body.dark[data-color=chatgpt]{--theme-accent:#e0e0e0;--theme-bg:#212121;--theme-selected:#363636;--panel:#292929;--ink:#ececec;--muted:#b4b4b4;--line:#424242;--hover:#363636;background:#212121;--completed-text:#a3a3a3}
+body.dark[data-color=chatgpt] .sidebar{background:#171717}
+body[data-color=chatgpt] .task.done .check{background:#64748b;border-color:#64748b;color:#fff!important}
+body[data-color=chatgpt] .task.done .task-title,body[data-color=chatgpt] .step.done span{color:var(--completed-text)}
+body[data-color=chatgpt] .step input[type=checkbox]{accent-color:#64748b}
+body[data-color=chatgpt] .task:hover{border-color:var(--line)}
+body[data-color=chatgpt] .task.selected{border-color:var(--accent)}
+body[data-color=chatgpt] .task .check:hover,body[data-color=slate] .task .check:hover{background:var(--theme-selected)}
+body[data-color=chatgpt] .task.done .check:hover{background:#64748b}
+body[data-color=chatgpt] :is(input,textarea,select):focus,body[data-color=chatgpt] button:focus-visible,body[data-color=slate] :is(input,textarea,select):focus,body[data-color=slate] button:focus-visible{outline-color:var(--accent)}
+body[data-color=slate] .task.done .check:hover{background:var(--accent)}
+
+
+body.dark[data-color=chatgpt] .task.done .check{color:#fff!important}
