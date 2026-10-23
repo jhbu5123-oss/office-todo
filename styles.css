@@ -127,3 +127,7 @@ body.dark[data-color=rose]{--theme-accent:#eba4b7;--theme-bg:#302429;--theme-sel
 body.dark[data-color=sand]{--theme-accent:#d9c17f;--theme-bg:#2b2922;--theme-selected:#48412e}
 body.dark[data-color] h1,body.dark[data-color] .nav-item.active .nav-icon{color:var(--accent)}
 body.dark[data-color] .primary,body.dark[data-color] #submit-task,body.dark[data-color] .task.done .check{color:#20232d!important}
+
+/* Remember email */
+.auth-card label.remember-email{display:flex;align-items:center;gap:8px;cursor:pointer;margin:16px 0 5px;width:fit-content}
+.auth-card .remember-email input{width:16px;height:16px;margin:0;padding:0;accent-color:var(--theme-accent,#526bc2);flex-shrink:0}

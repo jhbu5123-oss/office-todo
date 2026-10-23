@@ -4,6 +4,16 @@ const Cloud = (() => {
  const AUTH_KEY='office-todo.auth',RECOVERY_KEY='office-todo.recovery';
  const byId=id=>document.getElementById(id),authBox=byId('auth-screen'),app=document.querySelector('.app');
  let session=null,revision=0,pending=null,running=false,debounce,failed=false,ready=false,authBusy=false,recovery=false,mode='login',started,refreshing;
+ const EMAIL_KEY='office-todo.remembered-email';
+ const remember=byId('remember-email');
+ function restoreEmail(){
+  let email='';try{email=localStorage.getItem(EMAIL_KEY)||'';}catch{}
+  if(email.length>254)email='';
+  byId('login-email').value=email;remember.checked=!!email;
+ }
+ restoreEmail();
+ remember.addEventListener('change',()=>{if(!remember.checked){try{localStorage.removeItem(EMAIL_KEY);}catch{message('저장된 아이디를 지우지 못했습니다. 브라우저의 사이트 데이터를 삭제해 주세요.',true);}}});
+ function saveEmail(email){try{if(remember.checked)localStorage.setItem(EMAIL_KEY,email);else localStorage.removeItem(EMAIL_KEY);}catch{remember.checked=false;}}
  const status=t=>byId('save-status').textContent=t;
  function message(text='',error=false){const el=byId(error?'auth-error':'auth-message');el.textContent=text;el.hidden=!text;}
  function clearMessages(){message();message('',true);}
@@ -61,6 +71,7 @@ const Cloud = (() => {
  function clearSession(){
   session=null;ready=false;recovery=false;pending=null;revision=0;failed=false;clearTimeout(debounce);
   sessionStorage.removeItem(AUTH_KEY);sessionStorage.removeItem(RECOVERY_KEY);
+  restoreEmail();byId('login-password').value='';
   state=TodoCore.empty();chosen=null;
   if(typeof view!=='undefined')view='today';if(typeof query!=='undefined')query='';if(typeof picks!=='undefined')picks.clear();if(typeof picking!=='undefined')picking=false;
   app.hidden=true;app.inert=true;authBox.hidden=false;byId('sync-error').hidden=true;
@@ -105,7 +116,7 @@ const Cloud = (() => {
  for(const prefix of ['signup','reset'])for(const suffix of ['password','confirm'])byId(prefix+'-'+suffix).addEventListener('input',()=>{byId(prefix+'-password').setCustomValidity('');byId(prefix+'-confirm').setCustomValidity('');});
  bindForm('login-form',async()=>{
   const s=await request('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email:byId('login-email').value.trim(),password:byId('login-password').value})},false);
-  keep(s);recovery=false;sessionStorage.removeItem(RECOVERY_KEY);byId('login-password').value='';
+  keep(s);saveEmail(byId('login-email').value.trim());recovery=false;sessionStorage.removeItem(RECOVERY_KEY);byId('login-password').value='';
   try{await enter();}catch(e){clearSession();message('로그인은 되었지만 할 일을 불러오지 못했습니다. 잠시 후 다시 로그인하거나 관리자에게 문의하세요.',true);}
  });
  bindForm('signup-form',async()=>{
