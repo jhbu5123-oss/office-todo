@@ -33,7 +33,7 @@ function complete(state,t,today=day()){
 function matches(t,view,today=day()){
  if(view==='trash')return !!t.deleted;
  if(t.deleted)return false;
- if(view==='today')return !t.done&&t.myDay===today;
+ if(view==='today')return !t.done&&(t.myDay===today||t.due===today);
  if(view==='important')return !t.done&&t.important;
  if(view==='planned')return !t.done&&!!(t.due||t.reminder);
  if(view==='all')return !t.done;
